@@ -1,4 +1,3 @@
-;(load-file "~/.emacs.d/elpa/cedet/cedet-devel-load.el") 
 (server-start)
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (require 'package)
@@ -19,14 +18,14 @@
       mac-command-key-is-meta nil
       mac-command-modifier 'meta
       mac-option-modifier 'none)
-(setq mac
-(require 'ido)
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward)
+(setq mac-function-modifier 'control))))
+
 (require 'LaTeX-octi)
 (require 'cpp-octi-new)
 (require 'python-octi)
 (require 'generic-util-octi)
+(require 'ido)
+(require 'magit)
 (autoload 'autopair-global-mode "autopair" nil t)
 (autopair-global-mode)
 (add-hook 'lisp-mode-hook
@@ -44,7 +43,7 @@
 (require 'bar-cursor)
 (autoload 'global-flyspell-mode "flyspell" "On-the-fly spelling" t)
 (setq-default ispell-program-name "aspell") 
-;;predictive
+
 (add-to-list 'auto-mode-alist '("\\.cl" . c-mode))
 (setq auto-mode-alist
 	  (append

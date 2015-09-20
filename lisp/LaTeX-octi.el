@@ -11,7 +11,6 @@
 	      		     (require 'company)
 	      		     (require 'company-math)
 	      		     (company-mode)
-			     (require 'company-auctex)
 	      		     (setq-local company-backends
 			     		 '(company-math-symbols-latex company-latex-commands ))
 			     (local-set-key (kbd "M-/") 'company-complete)
@@ -82,13 +81,14 @@ t)
  '(preview-default-document-pt 14)
  '(preview-scale-function 2.0)
  )
-;;;;FUN DEFS(defun do-Texify ()
+;;;;FUN DEFS
+(defun do-Texify ()
    "Texify the curent file."
    (interactive)
    (save-buffer)
    (TeX-command-menu "TexifyPDF")
  )
-(defun do-All-LaTeX ()
+(defun do-All-LaTeX ()∑
    "Texify the curent file and view."
    (interactive)
    (save-buffer)
