@@ -19,7 +19,7 @@
       mac-command-key-is-meta nil
       mac-command-modifier 'meta
       mac-option-modifier 'none)
-(setq mac-function-modifier 'control))))
+(setq mac
 (require 'ido)
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
@@ -86,8 +86,6 @@
  '(preview-scale-function 2.0)
  '(py-python-command-args (quote ("--pylab" "--colors=Linux")))
  '(py-shell-name "ipython")
- '(semantic-idle-scheduler-idle-time 3)
- '(semantic-self-insert-show-completion-function (lambda nil (semantic-ia-complete-symbol-menu (point))))
  '(send-mail-function (quote mailclient-send-it)))
 ;;;;FUN DEFS
 

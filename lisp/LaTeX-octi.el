@@ -11,8 +11,10 @@
 	      		     (require 'company)
 	      		     (require 'company-math)
 	      		     (company-mode)
+			     (require 'company-auctex)
 	      		     (setq-local company-backends
-                             (append '(company-math-symbols-latex company-latex-commands) company-backends))			     
+			     		 '(company-math-symbols-latex company-latex-commands ))
+			     (local-set-key (kbd "M-/") 'company-complete)
 			    ))
 
 (add-hook 'LaTeX-mode-hook '(lambda()
@@ -80,8 +82,7 @@ t)
  '(preview-default-document-pt 14)
  '(preview-scale-function 2.0)
  )
-;;;;FUN DEFS
-(defun do-Texify ()
+;;;;FUN DEFS(defun do-Texify ()
    "Texify the curent file."
    (interactive)
    (save-buffer)
