@@ -5,21 +5,12 @@
 		    (set-variable 'py-indent-offset 4)
 		    (set-variable 'py-smart-indentation nil)
 		    (set-variable 'indent-tabs-mode nil) 
-                    (define-key python-mode-map "\C-m" 'newline-and-indent)
-	 )
-      )
+                    (define-key python-mode-map "\C-m" 'newline-and-indent)))
 )
 
 (add-hook 'python-mode-hook
-          (lambda ()
-	     (autoload 'pymacs-apply "pymacs")
-	     (autoload 'pymacs-call "pymacs")
-	     (autoload 'pymacs-eval "pymacs" nil t)
-	     (autoload 'pymacs-exec "pymacs" nil t)
-	     (autoload 'pymacs-load "pymacs" nil t)
-	     ))
-(add-hook 'python-mode-hook
 	  (lambda()
+	    (setq py-load-pymacs-p t)
 	     (require 'auto-complete-pycomplete)
 	     (require 'auto-complete-config)
 	     (require 'popup)
@@ -30,10 +21,11 @@
 	     ))
 ;; (add-hook 'python-mode-hook
 ;; 	  (lambda()
+;;          (setq py-load-pymacs-p t)
 ;; 	    (require 'company-pycomplete)
 ;; 	    (setq company-backends '((company-pycomplete)))
-;; 	     (company-mode)
-;; 	     (local-set-key (kbd "M-/") 'company-complete)
+;; 	    (company-mode)
+;; 	    (local-set-key (kbd "M-/") 'company-complete)
 ;; 	    ))
 
 (defun my-compile ()

@@ -25,3 +25,6 @@
 [submodule "lisp/plugins/magit"]
 	path = lisp/plugins/magit
 	url = https://github.com/magit/magit.git
+[submodule "lisp/plugins/Pymacs"]
+	path = lisp/plugins/Pymacs
+	url = https://github.com/pinard/Pymacs.git
