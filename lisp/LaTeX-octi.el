@@ -1,4 +1,4 @@
-(load "auctex.el" nil t t)
+(load "~/.emacs.d/lisp/plugins/auctex/auctex.el" nil t t)
 (setq LaTeX-using-Biber nil)
 ;(setq-default TeX-master nil)
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)
@@ -26,21 +26,42 @@
 t)
 
 (setq reftex-plug-into-AUCTeX t)
+(if (or (eq system-type 'darwin) (eq system-type 'gnu-linu))
+  ; something for OS X if true
+  ; optional something if not
+
 (add-hook 'LaTeX-mode-hook (lambda ()
   (TeX-global-PDF-mode t)
   (push 
     '("Latexmk" "latexmk -pdflatex='pdflatex -file-line-error -synctex=1' -pdf %s" Tex-run-TeX nil t
       :help "Run Latexmk on file")
     TeX-command-list)))
-
 (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
 (add-hook 'LaTeX-mode-hook
 	(lambda()
 	(add-to-list 'TeX-command-list
 			(list "TexifyPDF"
           "latexmk -pdflatex='pdflatex -file-line-error -synctex=1' -pdf %s"
-         'TeX-run-command nil t))
-	))
+         'TeX-run-command nil t)))))
+; Mac only settings
+(if (eq system-type 'darwin)
+    (add-hook 'LaTeX-mode-hook
+	(lambda()
+	(setq TeX-view-program-list
+         '(("Skim" "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o") ("Preview" "open -a Preview.app %o")))
+	(defun skim-make-url () (concat
+        (TeX-current-line)
+        " "
+        (expand-file-name (funcall file (TeX-output-extension) t)
+            (file-name-directory (TeX-master-file)))
+        " "
+        (buffer-file-name)))
+
+	(add-to-list 'TeX-expand-list
+             '("%q" skim-make-url))
+	(custom-set-variables
+	 '(TeX-view-program-selection (quote (((output-dvi style-pstricks) "dvips and start") (output-dvi "Skim") (output-pdf "Skim") (output-html "start")))))
+       )))
 (add-hook 'LaTeX-mode-hook
 	(lambda()
 	(add-to-list 'TeX-command-list
@@ -56,28 +77,8 @@ t)
          'TeX-run-command t nil))
 	))
 
-
-(add-hook 'LaTeX-mode-hook
-      (lambda()
-        (add-to-list 'TeX-expand-list
-             '("%q" skim-make-url))))
-
-(defun skim-make-url () (concat
-        (TeX-current-line)
-        " "
-        (expand-file-name (funcall file (TeX-output-extension) t)
-            (file-name-directory (TeX-master-file)))
-        " "
-        (buffer-file-name)))
-
-(add-hook 'LaTeX-mode-hook
-	(lambda()
-(setq TeX-view-program-list
-      '(("Skim" "/Applications/Skim.app/Contents/SharedSupport/displayline -b %n %o") ("Preview" "open -a Preview.app %o")))
-       ))
 (custom-set-variables
  '(LaTeX-command "latex -synctex=1 --shell-escape --enable-write18")
- '(TeX-view-program-selection (quote (((output-dvi style-pstricks) "dvips and start") (output-dvi "Skim") (output-pdf "Skim") (output-html "start"))))
  '(preview-default-document-pt 14)
  '(preview-scale-function 2.0)
  )
