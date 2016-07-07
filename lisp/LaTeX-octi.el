@@ -24,26 +24,22 @@
   '(define-key flyspell-mode-map (kbd "C-;") nil))
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checking"
 t)
-
 (setq reftex-plug-into-AUCTeX t)
-(if (or (eq system-type 'darwin) (eq system-type 'gnu-linu))
-  ; something for OS X if true
-  ; optional something if not
 
-(add-hook 'LaTeX-mode-hook (lambda ()
-  (TeX-global-PDF-mode t)
-  (push 
-    '("Latexmk" "latexmk -pdflatex='pdflatex -file-line-error -synctex=1' -pdf %s" Tex-run-TeX nil t
-      :help "Run Latexmk on file")
-    TeX-command-list)))
-(add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
-(add-hook 'LaTeX-mode-hook
-	(lambda()
-	(add-to-list 'TeX-command-list
-			(list "TexifyPDF"
-          "latexmk -pdflatex='pdflatex -file-line-error -synctex=1' -pdf %s"
-         'TeX-run-command nil t)))))
-; Mac only settings
+(if (or (eq system-type 'darwin) (eq system-type 'gnu-linu))
+                                        ; something for OS X if true
+                                        ; optional something if not
+
+    (add-hook 'LaTeX-mode-hook (lambda ()
+                                 (add-to-list 'TeX-command-list
+                                              '("TexifyPDF" "latexmk -pdflatex='pdflatex -file-line-error -synctex=1 -shell-escape -enable-restricted' -pdf %s" TeX-run-command nil :help "Texify document to pdf (resolves all cross-references, etc.)") t)
+                                 (TeX-global-PDF-mode t)
+                                 (TeX-PDF-mode t)
+                                 ))
+  (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "TexifyPDF"))))
+
+;;;; Mac only settings
+
 (if (eq system-type 'darwin)
     (add-hook 'LaTeX-mode-hook
 	(lambda()
@@ -62,24 +58,38 @@ t)
 	(custom-set-variables
 	 '(TeX-view-program-selection (quote (((output-dvi style-pstricks) "dvips and start") (output-dvi "Skim") (output-pdf "Skim") (output-html "start")))))
        )))
-(add-hook 'LaTeX-mode-hook
+;;; Linux Gnu settings
+
+(if (eq system-type 'gnu/linux)
+
+  (custom-set-variables
+   '(TeX-source-correlate-method (quote synctex))
+   '(TeX-source-correlate-mode t t)
+   '(TeX-source-correlate-start-server t)
+   '(TeX-source-specials-view-emacsclient-flags "--no-wait +%%l %%f")
+   '(TeX-view-program-list (quote (("Okular" "okular --unique %o#src:%n%(masterdir)./%b") ("Sumatra" ("SumatraPDF.exe -reuse-instance" (mode-io-correlate " -forward-search %b %n") " %o")))))
+   '(TeX-view-program-selection (quote (((output-dvi style-pstricks) "dvips and gv") (output-dvi "xdvi") (output-pdf "Okular") (output-html "xdg-open"))))
+   ))
+
+
+(if (eq system-type 'windows-nt)
+    (add-hook 'LaTeX-mode-hook
+              (lambda()
+                (add-to-list 'TeX-command-list
+                             (list "All Texify run-viewer"
+                                   "texify --tex-option=--src --run-viewer --clean %t --pdf"
+                                   'TeX-run-command nil t))))
+  (add-hook 'LaTeX-mode-hook
 	(lambda()
-	(add-to-list 'TeX-command-list
-			(list "All Texify run-viewer"
-         "texify --tex-option=--src --run-viewer --clean %t --pdf"
-         'TeX-run-command nil t))
-	))
-(add-hook 'LaTeX-mode-hook
-	(lambda()
-	(add-to-list 'TeX-command-list
-			(list "LaTeX-diff"
-         "latexdiff-vc --svn --force --pdf -r %t"
-         'TeX-run-command t nil))
-	))
+	  (add-to-list 'TeX-view-program-list-builtin
+	     (list "TeXworks" "miktex-texworks %o")
+	     )))
+  )
 
 (custom-set-variables
  '(LaTeX-command "latex -synctex=1 --shell-escape --enable-write18")
  '(preview-default-document-pt 14)
+ '(preview-gs-options (quote ("-q" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4")))
  '(preview-scale-function 2.0)
  )
 ;;;;FUN DEFS
@@ -89,7 +99,7 @@ t)
    (save-buffer)
    (TeX-command-menu "TexifyPDF")
  )
-(defun do-All-LaTeX ()∑
+(defun do-All-LaTeX ()
    "Texify the curent file and view."
    (interactive)
    (save-buffer)
@@ -112,20 +122,6 @@ t)
   (interactive)
   (TeX-command-menu "LaTeX-diff")
 )
-(defun do-diff-open ()
-   "Do LateX-diff then view files"
-   (interactive)
-   (save-buffer)
-   (setq my-string (TeX-master-file))
-   (setq args_s (concatenate 'string "--svn --force --pdf -r " my-string)) 
-   (print args_s t)
-   (setq args_f (concatenate 'string my-string ".tex"))
-   (print args_f t)
-   (call-process "latexdiff-vc" nil "blablu" t "--svn" "--force" "-r" args_f)
-
-   (find-file-existing (concatenate 'string my-string "-diff.tex"))
-   ;;(find-file my-string)
-   (TeX-command-menu "All Texify run-viewer"))
 
 (defalias 'lower_index
   (read-kbd-macro "_{} <left>"))
@@ -135,6 +131,7 @@ t)
   (read-kbd-macro "\\frac{}{} <left><left><left>"))
   (defalias 'paren
   (read-kbd-macro "\\left(\\right) M-b <left>"))
+
 (add-hook 'LaTeX-mode-hook
   '(lambda nil
        (define-key LaTeX-mode-map (kbd "C-`") 'TeX-next-error)
@@ -148,5 +145,5 @@ t)
 	   (define-key LaTeX-mode-map (kbd "C-M-w") 'do-preview-sec)
 	   (define-key LaTeX-mode-map (kbd "C-M-v") 'preview-clearout-at-point)
 	   (define-key LaTeX-mode-map (kbd "C-M-l") 'do-diff-open)
-         )) 	
+         ))
 (provide 'LaTeX-octi)

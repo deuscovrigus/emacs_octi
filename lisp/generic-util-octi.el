@@ -53,7 +53,7 @@ With argument ARG, do this that many times."
   (interactive "P")
   ;; taken from kill-line
   (kill-ring-save (point)
-  		  
+
                  ;; It is better to move point to the other end of the kill
                  ;; before killing.  That way, in a read-only buffer, point
                  ;; moves across the text that is copied to the kill ring.
@@ -85,12 +85,30 @@ With argument ARG, do this that many times."
 (interactive)
 (other-window-or-frame -1)
 )
+
+;; (defun frame-bck()
+;;   (interactive)
+;;   (other-window -1))
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
+  "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+  (flet ((process-list ())) ad-do-it))
+
+(defun stop-using-minibuffer ()  "kill the minibuffer"
+(when (and (>= (recursion-depth) 1) (active-minibuffer-window))
+(abort-recursive-edit)))
+(add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
+(require 'bar-cursor)
+(autoload 'global-flyspell-mode "flyspell" "On-the-fly spelling" t)
+(setq-default ispell-program-name "aspell")
+
+(add-to-list 'auto-mode-alist '("\\.cl" . c-mode))
 (setq auto-mode-alist
 	  (append
 	   '(("CMakeLists\\.txt\\'" . cmake-mode))
 	   '(("\\.cmake\\'" . cmake-mode))
 	   auto-mode-alist))
-(autoload 'cmake-mode "cmake-mode.el" t)
 
 (defun cmake-rename-buffer ()
   "Renames a CMakeLists.txt buffer to cmake-<directory name>."
@@ -110,7 +128,4 @@ With argument ARG, do this that many times."
 (add-hook 'cmake-mode-hook (function cmake-rename-buffer))
 (dolist (cmd '(delete-word backward-delete-word))
   (put cmd 'CUA 'move))
-(defun frame-bck()
-  (interactive)
-  (other-window -1))
 (provide 'generic-util-octi)

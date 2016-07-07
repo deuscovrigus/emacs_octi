@@ -1,17 +1,22 @@
 (server-start)
+(remove-hook 'python-mode-hook 'wisent-python-default-setup)
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (require 'package)
 (package-initialize)
-;;  (setq package-archives '(("ELPA" . "http://tromey.com/elpa/") 
+;;  (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
 ;;                            ("gnu" . "http://elpa.gnu.org/packages/")
 ;; ("marmalade" . "http://marmalade-repo.org/packages/")))
 
 (progn (cd "~/.emacs.d/lisp")(normal-top-level-add-subdirs-to-load-path))
  (setq mouse-wheel-progressive-speed nil)
-;(set-message-beep 'silent)
 (setq save-interprogram-paste-before-kill t)
+
+;; no tabs and trailing white space
+(setq-default indent-tabs-mode nil)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 (cond
- ((string-equal system-type "darwin") ; Mac OS X
+ ((string-equal system-type 'darwin) ; Mac OS X
   (progn
 (require 'fixpath)
 (setq mac-option-key-is-meta t
@@ -20,37 +25,36 @@
       mac-option-modifier 'none)
 (setq mac-function-modifier 'control))))
 
+(cond
+ ((string-equal system-type 'gnu/linux) ; Linux - Gnu
+  (progn
+   (require 'bash-completion)
+   (bash-completion-setup)
+   (if (file-exists-p "/usr/local/share/emacs/site-lisp/")(progn
+							  (cd "/usr/local/share/emacs/site-lisp/")
+							  (normal-top-level-add-subdirs-to-load-path)
+                                                        ) nil)
+
+
+)))
+
+
 (require 'LaTeX-octi)
 (require 'cpp-octi-new)
 (require 'python-octi)
 (require 'generic-util-octi)
 (require 'ido)
 (require 'magit)
+(require 'uniquify)
+(require 'doc-view)
+(require 'zenburn-theme)
+
+(setq uniquify-buffer-name-style 'post-forward)
 (autoload 'autopair-global-mode "autopair" nil t)
 (autopair-global-mode)
 (add-hook 'lisp-mode-hook
           #'(lambda () (setq autopair-dont-activate t)))
 
-(defalias 'yes-or-no-p 'y-or-n-p)
-(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
-  "Prevent annoying \"Active processes exist\" query when you quit Emacs."
-  (flet ((process-list ())) ad-do-it))
-
-(defun stop-using-minibuffer ()  "kill the minibuffer"  
-(when (and (>= (recursion-depth) 1) (active-minibuffer-window))    
-(abort-recursive-edit)))
-(add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
-(require 'bar-cursor)
-(autoload 'global-flyspell-mode "flyspell" "On-the-fly spelling" t)
-(setq-default ispell-program-name "aspell") 
-
-(add-to-list 'auto-mode-alist '("\\.cl" . c-mode))
-(setq auto-mode-alist
-	  (append
-	   '(("CMakeLists\\.txt\\'" . cmake-mode))
-	   '(("\\.cmake\\'" . cmake-mode))
-	   auto-mode-alist))
-(autoload 'cmake-mode "cmake-mode.el" t)
 (cua-mode t)
 (setq cua-delete-copy-to-register-0 nil)
 (define-key global-map (kbd "<S-down-mouse-1>") 'ignore) ; turn off font dialog
@@ -59,12 +63,14 @@
 (setq mouse-drag-copy-region nil)
 (bar-cursor-mode 1)
 (ido-mode t)
+
 (set-foreground-color "white")
 (set-background-color "black")
 (set-face-attribute 'default nil :height 150)
 (setq case-fold-search nil)
 (setq doc-view-continuous t)
 (delete-selection-mode 1)
+(setq split-width-threshold nil)
 (setq kill-buffer-query-functions
   (remq 'process-kill-buffer-query-function
          kill-buffer-query-functions)) ; no active process prompt
@@ -76,15 +82,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(LaTeX-command "latex -synctex=1 --shell-escape --enable-write18")
- '(TeX-view-program-selection (quote (((output-dvi style-pstricks) "dvips and start") (output-dvi "Skim") (output-pdf "Skim") (output-html "start"))))
  '(backup-by-copying t)
- '(cppcm-build-dirname "build_unix")
- '(ipython-complete-use-separate-shell-p nil)
- '(preview-default-document-pt 14)
- '(preview-scale-function 2.0)
- '(py-python-command-args (quote ("--pylab" "--colors=Linux")))
- '(py-shell-name "ipython")
  '(send-mail-function (quote mailclient-send-it)))
 ;;;;FUN DEFS
 
@@ -108,11 +106,11 @@
  '(flymake-warnline ((((class color)) (:underline "yellow"))))
  '(font-lock-comment-face ((t (:foreground "#00CD00"))))
  '(mumamo-region ((t (:background "black")))))
-(defun ns-get-pasteboard () 
-      "Returns the value of the pasteboard, or nil for unsupported formats." 
-     (condition-case nil 
-         (ns-get-selection-internal 'CLIPBOARD) 
-       (quit nil))) 
+(defun ns-get-pasteboard ()
+      "Returns the value of the pasteboard, or nil for unsupported formats."
+     (condition-case nil
+         (ns-get-selection-internal 'CLIPBOARD)
+       (quit nil)))
 (defun flymake-get-tex-args (file-name)
   (list "pdflatex" (list "-file-line-error" "-draftmode" "-interaction=nonstopmode" file-name)))
 (require 'flymake-cursor)
