@@ -1,3 +1,6 @@
 [submodule "lisp/plugins/python-mode"]
 	path = lisp/plugins/python-mode
 	url = https://github.com/emacsmirror/python-mode.git
+[submodule "lisp/plugins/Pymacs"]
+	path = lisp/plugins/Pymacs
+	url = https://github.com/pinard/Pymacs.git
