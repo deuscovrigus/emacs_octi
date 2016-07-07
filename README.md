@@ -1,2 +1,4 @@
-# emacs_octi
-# emacs_octi
+# Emacs configuration for Octavian Biris
+
+Requirements:
+Cask, Rtags

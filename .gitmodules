@@ -1,6 +1,3 @@
-[submodule "lisp/plugins/auctex"]
-	path = lisp/plugins/auctex
-	url = git://git.savannah.gnu.org/auctex.git
 [submodule "lisp/plugins/company-mode"]
 	path = lisp/plugins/company-mode
 	url = https://github.com/company-mode/company-mode
@@ -22,9 +19,3 @@
 [submodule "lisp/plugins/company-math"]
 	path = lisp/plugins/company-math
 	url = https://github.com/vspinu/company-math.git
-[submodule "lisp/plugins/magit"]
-	path = lisp/plugins/magit
-	url = https://github.com/magit/magit.git
-[submodule "lisp/plugins/Pymacs"]
-	path = lisp/plugins/Pymacs
-	url = https://github.com/pinard/Pymacs.git
