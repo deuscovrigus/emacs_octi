@@ -62,13 +62,15 @@ t)
 ;;; Linux Gnu hooks
 (if (eq system-type 'gnu/linux)
  (add-hook 'LaTeX-mode-hook
-	(lambda()
+           (lambda()
+            (push '("%(masterdir)" (lambda nil (file-truename (TeX-master-directory))))
+        TeX-expand-list)
   (custom-set-variables
    '(TeX-source-correlate-method (quote synctex))
    '(TeX-source-correlate-mode t t)
    '(TeX-source-correlate-start-server t)
-   '(TeX-source-specials-view-emacsclient-flags "--no-wait +%l %f")
-   '(TeX-view-program-list (quote (("Okular" "okular --unique %o#src:%n%b"))))
+   '(TeX-source-specials-view-emacsclient-flags "--no-wait +%%l %%f")
+   '(TeX-view-program-list (quote (("Okular" "okular --unique %o#src:%n%(masterdir)./%b"))))
    '(TeX-view-program-selection (quote (((output-dvi style-pstricks) "dvips and gv") (output-dvi "xdvi") (output-pdf "Okular") (output-html "xdg-open"))))
    ))))
 
