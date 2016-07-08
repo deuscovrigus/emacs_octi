@@ -23,28 +23,25 @@
 		    (set-variable 'py-indent-offset 4)
 		    (set-variable 'py-smart-indentation nil)
 		    (set-variable 'indent-tabs-mode nil)
-		    ;;(highlight-beyond-fill-column)
                     (define-key python-mode-map "\C-m" 'newline-and-indent)
                     (delq 'ac-source-dictionary ac-sources)
                     (delq 'ac-source-abbrev ac-sources)
                     (delq 'ac-source-words-in-same-mode-buffers ac-sources)
-                                        ;(pabbrev-mode)
-                                        ;(abbrev-mode)
                     )))
 
-;;;;;; Py-complete python setup
+;;;;;; Py-complete python setup -disabled for now
 
-(add-hook 'python-mode-hook
-	  (lambda()
-	    (setq py-load-pymacs-p t)
-	     (require 'auto-complete-pycomplete)
-	     (require 'auto-complete-config)
-	     (require 'popup)
-    	     (ac-config-default)
-	     (local-set-key (kbd "M-/") 'auto-complete)
-             (setq ac-sources '(ac-source-pycomplete
-                               ))
-	     ))
+;; (add-hook 'python-mode-hook
+;; 	  (lambda()
+;; 	    (setq py-load-pymacs-p t)
+;; 	     (require 'auto-complete-pycomplete)
+;; 	     (require 'auto-complete-config)
+;; 	     (require 'popup)
+;;     	     (ac-config-default)
+;; 	     (local-set-key (kbd "M-/") 'auto-complete)
+;;              (setq ac-sources '(ac-source-pycomplete
+;;                                ))
+;; 	     ))
 
 ;;;;;; Company python setup
 

@@ -5,17 +5,13 @@
 
 (add-hook 'c++-mode-hook
          (lambda ()
-	    (require 'auto-complete)
-	    (require 'auto-complete-config)
-	    (ac-config-default)
-	    (require 'popup)
 	    (require 'rtags-ac)
 	    (setq ac-sources '(ac-source-rtags))
     	    (require 'yasnippet)
 	    (yas-minor-mode)
+            (auto-complete-mode)
             (local-unset-key (kbd "M-/"))
 	    (local-set-key (kbd "M-/") 'auto-complete)
-
              ))
 
 ;; (add-hook 'c++-mode-hook

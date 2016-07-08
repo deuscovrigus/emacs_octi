@@ -82,8 +82,8 @@ With argument ARG, do this that many times."
   (put cmd 'CUA 'move))
 
 (defun frame-bck()
-(interactive)
-(other-window-or-frame -1)
+  (interactive)
+  (other-window -1)
 )
 
 ;; (defun frame-bck()

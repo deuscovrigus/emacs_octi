@@ -3,12 +3,11 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (require 'package)
 (package-initialize)
-;;  (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-;;                            ("gnu" . "http://elpa.gnu.org/packages/")
-;; ("marmalade" . "http://marmalade-repo.org/packages/")))
+(add-to-list 'package-archives  '("marmalade" .  "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives  '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 (progn (cd "~/.emacs.d/lisp")(normal-top-level-add-subdirs-to-load-path))
- (setq mouse-wheel-progressive-speed nil)
+(setq mouse-wheel-progressive-speed nil)
 (setq save-interprogram-paste-before-kill t)
 
 ;; no tabs and trailing white space
@@ -33,9 +32,7 @@
    (if (file-exists-p "/usr/local/share/emacs/site-lisp/")(progn
 							  (cd "/usr/local/share/emacs/site-lisp/")
 							  (normal-top-level-add-subdirs-to-load-path)
-                                                        ) nil)
-
-
+                                                       ) nil)
 )))
 
 
@@ -62,10 +59,12 @@
 (put 'mouse-set-point 'CUA 'move)
 (setq mouse-drag-copy-region nil)
 (bar-cursor-mode 1)
+(scroll-bar-mode -1) ; no scroll bars
+(tool-bar-mode -1) ; no tool bar
 (ido-mode t)
 
-(set-foreground-color "white")
-(set-background-color "black")
+;; (set-foreground-color "white")
+;; (set-background-color "black")
 (set-face-attribute 'default nil :height 150)
 (setq case-fold-search nil)
 (setq doc-view-continuous t)
@@ -104,7 +103,7 @@
 (custom-set-faces
  '(flymake-errline ((((class color)) (:underline "red"))))
  '(flymake-warnline ((((class color)) (:underline "yellow"))))
- '(font-lock-comment-face ((t (:foreground "#00CD00"))))
+; '(font-lock-comment-face ((t (:foreground "#00CD00")))) super green comments
  '(mumamo-region ((t (:background "black")))))
 (defun ns-get-pasteboard ()
       "Returns the value of the pasteboard, or nil for unsupported formats."

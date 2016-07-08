@@ -1,4 +1,4 @@
-(load "~/.emacs.d/lisp/plugins/auctex/auctex.el" nil t t)
+(load "auctex.el" nil t t)
 (setq LaTeX-using-Biber nil)
 ;(setq-default TeX-master nil)
 (add-hook 'LaTeX-mode-hook 'visual-line-mode)
@@ -26,17 +26,18 @@
 t)
 (setq reftex-plug-into-AUCTeX t)
 
-(if (or (eq system-type 'darwin) (eq system-type 'gnu-linu))
+(if (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
                                         ; something for OS X if true
                                         ; optional something if not
 
     (add-hook 'LaTeX-mode-hook (lambda ()
+                                 (message "%s" "System detected as windows")
                                  (add-to-list 'TeX-command-list
                                               '("TexifyPDF" "latexmk -pdflatex='pdflatex -file-line-error -synctex=1 -shell-escape -enable-restricted' -pdf %s" TeX-run-command nil :help "Texify document to pdf (resolves all cross-references, etc.)") t)
                                  (TeX-global-PDF-mode t)
                                  (TeX-PDF-mode t)
-                                 ))
-  (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "TexifyPDF"))))
+                                 (setq TeX-command-default "TexifyPDF")
+                                 )))
 
 ;;;; Mac only settings
 
@@ -58,40 +59,48 @@ t)
 	(custom-set-variables
 	 '(TeX-view-program-selection (quote (((output-dvi style-pstricks) "dvips and start") (output-dvi "Skim") (output-pdf "Skim") (output-html "start")))))
        )))
-;;; Linux Gnu settings
-
+;;; Linux Gnu hooks
 (if (eq system-type 'gnu/linux)
-
+ (add-hook 'LaTeX-mode-hook
+	(lambda()
   (custom-set-variables
    '(TeX-source-correlate-method (quote synctex))
    '(TeX-source-correlate-mode t t)
    '(TeX-source-correlate-start-server t)
-   '(TeX-source-specials-view-emacsclient-flags "--no-wait +%%l %%f")
-   '(TeX-view-program-list (quote (("Okular" "okular --unique %o#src:%n%(masterdir)./%b") ("Sumatra" ("SumatraPDF.exe -reuse-instance" (mode-io-correlate " -forward-search %b %n") " %o")))))
+   '(TeX-source-specials-view-emacsclient-flags "--no-wait +%l %f")
+   '(TeX-view-program-list (quote (("Okular" "okular --unique %o#src:%n%b"))))
    '(TeX-view-program-selection (quote (((output-dvi style-pstricks) "dvips and gv") (output-dvi "xdvi") (output-pdf "Okular") (output-html "xdg-open"))))
-   ))
+   ))))
 
-
+;; windows hooks
 (if (eq system-type 'windows-nt)
     (add-hook 'LaTeX-mode-hook
               (lambda()
+                (message "%s" "System detected as windows")
                 (add-to-list 'TeX-command-list
-                             (list "All Texify run-viewer"
+                             (list "TexifyPDF"
                                    "texify --tex-option=--src --run-viewer --clean %t --pdf"
-                                   'TeX-run-command nil t))))
-  (add-hook 'LaTeX-mode-hook
-	(lambda()
-	  (add-to-list 'TeX-view-program-list-builtin
-	     (list "TeXworks" "miktex-texworks %o")
-	     )))
-  )
+                                   'TeX-run-command nil t))
+                (add-to-list 'TeX-view-program-list-builtin list "TeXworks" "miktex-texworks %o")
+                (custom-set-variables
+                 '(TeX-source-correlate-method (quote synctex))
+                 '(TeX-source-correlate-mode t t)
+                 '(TeX-source-correlate-start-server t)
+                 '(TeX-source-specials-view-emacsclient-flags "--no-wait +%%l %%f")
+                 '(TeX-view-program-list (quote (("Sumatra" ("SumatraPDF.exe -reuse-instance" (mode-io-correlate " -forward-search %b %n") " %o")))))
+                 '(TeX-view-program-selection (quote (((output-dvi style-pstricks) "dvips and gv") (output-dvi "gs") (output-pdf "Sumatra") (output-html "xdg-open"))))
+                 ))))
 
-(custom-set-variables
- '(LaTeX-command "latex -synctex=1 --shell-escape --enable-write18")
- '(preview-default-document-pt 14)
- '(preview-gs-options (quote ("-q" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4")))
- '(preview-scale-function 2.0)
- )
+;; system invariant hooks
+(add-hook 'LaTeX-mode-hook
+          (lambda()
+
+            (custom-set-variables
+             '(LaTeX-command "latex -synctex=1 --shell-escape --enable-write18")
+             '(preview-default-document-pt 14)
+             '(preview-gs-options (quote ("-q" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4")))
+             '(preview-scale-function 2.0)
+             )))
 ;;;;FUN DEFS
 (defun do-Texify ()
    "Texify the curent file."
