@@ -99,6 +99,10 @@
 (define-key (current-global-map) (kbd "M-c") 'cua--prefix-override-handler)
 (define-key (current-global-map) (kbd "M-v") 'cua-paste)
 (define-key (current-global-map) (kbd "M-g") 'goto-line)
+(define-key (current-global-map) (kbd "C-M-<right>") 'enlarge-window-horizontally)
+(define-key (current-global-map) (kbd "C-M-<left>") 'shrink-window-horizontally)
+(define-key (current-global-map) (kbd "C-M-<up>") 'enlarge-window)
+(define-key (current-global-map) (kbd "C-M-<down>") 'shrink-window)
 
 (custom-set-faces
  '(flymake-errline ((((class color)) (:underline "red"))))
