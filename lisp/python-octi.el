@@ -137,6 +137,7 @@
  '(py-force-py-shell-name-p nil)
  '(py-keep-windows-configuration nil)
  '(py-split-window-on-execute t)
+ '(py-underscore-word-syntax-p nil)
  '(python-shell-interpreter "ipython")
 )
 (provide 'python-octi)
