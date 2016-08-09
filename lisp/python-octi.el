@@ -3,31 +3,25 @@
 (remove-hook 'python-mode-hook 'wisent-python-default-setup)
 (setq py-complete-function 'py-complete)
 (setq py-install-directory "~/.emacs.d/lisp/plugins/python-mode")
-(setq interpreter-mode-alist
-        '(lambda () (progn
-		    (set-variable 'py-indent-offset 4)
-		    (set-variable 'py-smart-indentation nil)
-		    (set-variable 'indent-tabs-mode nil)
-                    (define-key python-mode-map "\C-m" 'newline-and-indent)))
-)
 
+;; generic python settings
+(add-hook 'python-mode-hook
+          (lambda()
+            (set-variable 'py-indent-offset 4)
+            (set-variable 'py-smart-indentation nil)
+            (set-variable 'indent-tabs-mode nil)
+            (define-key python-mode-map "\C-m" 'newline-and-indent)
+           ))
 ;; Jedi python setup
-(setq interpreter-mode-alist
-      (cons '("python" . python-mode)
-	    interpreter-mode-alist)
-      python-mode-hook
-      '(lambda () (progn
-                    (jedi:setup)
-                    (setq jedi:complete-on-dot t)
-                    (setq jedi:server-command '("jediepcserver"))
-		    (set-variable 'py-indent-offset 4)
-		    (set-variable 'py-smart-indentation nil)
-		    (set-variable 'indent-tabs-mode nil)
-                    (define-key python-mode-map "\C-m" 'newline-and-indent)
-                    (delq 'ac-source-dictionary ac-sources)
-                    (delq 'ac-source-abbrev ac-sources)
-                    (delq 'ac-source-words-in-same-mode-buffers ac-sources)
-                    )))
+(add-hook 'python-mode-hook
+          (lambda()
+            (jedi:setup)
+            (setq jedi:complete-on-dot t)
+            (setq jedi:server-command '("jediepcserver"))
+            (delq 'ac-source-dictionary ac-sources)
+            (delq 'ac-source-abbrev ac-sources)
+            (delq 'ac-source-words-in-same-mode-buffers ac-sources)
+            ))
 
 ;;;;;; Py-complete python setup -disabled for now
 
@@ -61,7 +55,7 @@
   (compile (concat "python " (buffer-name))))
 
 (defun my-compile-d ()
-  "Use compile to run python programs"
+  "python debug exec"
   (interactive)
   (save-buffer)
   (compile (concat "python_d " (buffer-name))))

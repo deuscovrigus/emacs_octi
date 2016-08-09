@@ -1,7 +1,10 @@
 ;; Init RTags
-(require 'rtags)
-(setq rtags-completions-enabled t)
-(rtags-enable-standard-keybindings c-mode-base-map)
+(add-hook 'c++-mode-hook
+          (lambda ()
+            (require 'rtags)
+            (setq rtags-completions-enabled t)
+            (rtags-enable-standard-keybindings c-mode-base-map)
+            ))
 
 (add-hook 'c++-mode-hook
          (lambda ()
