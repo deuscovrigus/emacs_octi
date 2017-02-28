@@ -6,26 +6,26 @@
             (rtags-enable-standard-keybindings c-mode-base-map)
             ))
 
-(add-hook 'c++-mode-hook
-         (lambda ()
-	    (require 'rtags-ac)
-	    (setq ac-sources '(ac-source-rtags))
-    	    (require 'yasnippet)
-	    (yas-minor-mode)
-            (auto-complete-mode)
-            (local-unset-key (kbd "M-/"))
-	    (local-set-key (kbd "M-/") 'auto-complete)
-             ))
-
 ;; (add-hook 'c++-mode-hook
 ;;          (lambda ()
-;; 	    (require 'company-rtags)
-;; 	    (setq company-backends '(company-rtags))
-;; 	    (company-mode)
-;; 	    (rtags-diagnostics)
-;; 	    (local-unset-key (kbd "M-/"))
-;; 	    (local-set-key (kbd "M-/") 'company-complete)
-;; ))
+;; 	    (require 'rtags-ac)
+;; 	    (setq ac-sources '(ac-source-rtags))
+;;     	    (require 'yasnippet)
+;; 	    (yas-minor-mode)
+;;             (auto-complete-mode)
+;;             (local-unset-key (kbd "M-/"))
+;; 	    (local-set-key (kbd "M-/") 'auto-complete)
+;;              ))
+
+(add-hook 'c++-mode-hook
+         (lambda ()
+	    (require 'company-rtags)
+	    (setq company-backends '(company-rtags))
+	    (company-mode)
+	    (rtags-diagnostics)
+	    (local-unset-key (kbd "M-/"))
+	    (local-set-key (kbd "M-/") 'company-complete)
+))
 
 (add-hook 'c++-mode-hook
           (lambda()
