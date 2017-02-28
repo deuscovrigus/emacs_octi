@@ -2,3 +2,5 @@ elpa/
 lisp/plugins/
 ac-comphist.dat
 ede-projects.el
+bookmarks/
+session.*
