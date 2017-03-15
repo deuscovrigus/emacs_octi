@@ -129,6 +129,7 @@
  '(py-python-command-args (quote ("--pylab" "--colors=Linux")))
  '(py-shell-name "ipython")
  '(py-force-py-shell-name-p nil)
+ '(py-split-window-on-execute-threshold 2)
  '(py-keep-windows-configuration nil)
  '(py-split-window-on-execute t)
  '(py-underscore-word-syntax-p nil)
