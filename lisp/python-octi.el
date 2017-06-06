@@ -110,23 +110,17 @@
   '(flymake-warnline ((((class color)) (:underline "yellow")))))
 (add-hook 'python-mode-hook
           (lambda ()
-(when (load "flymake-cursor" t)
-  (defun flymake-pyflakes-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-		       'flymake-create-temp-inplace))
-	   (local-file (file-relative-name
-			temp-file
-			(file-name-directory buffer-file-name))))
-      (list "flake8" (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks
-	       '("\\.py\\'" flymake-pyflakes-init)))
+            (require 'flymake-cursor)
+            (require 'flymake-python-pyflakes)
+            (flymake-python-pyflakes-load)
+            (setq flymake-python-pyflakes-executable "flake8")
 ))
 
-(add-hook 'find-file-hook 'flymake-find-file-hook)
+;; (add-hook 'find-file-hook 'flymake-find-file-hook)
 
 (custom-set-variables
  '(ipython-complete-use-separate-shell-p nil)
- '(py-python-command-args (quote ("--pylab" "--colors=Linux")))
+ '(py-python-command-args (quote ("--colors=Linux")))
  '(py-shell-name "ipython")
  '(py-force-py-shell-name-p nil)
  '(py-split-window-on-execute-threshold 2)

@@ -83,6 +83,18 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(backup-by-copying t)
+ '(ipython-complete-use-separate-shell-p nil)
+ '(package-selected-packages
+   (quote
+    (flymake-python-pyflakes zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
+ '(py-force-py-shell-name-p nil)
+ '(py-keep-windows-configuration nil)
+ '(py-python-command-args (quote ("--colors=Linux")))
+ '(py-shell-name "ipython")
+ '(py-split-window-on-execute t)
+ '(py-split-window-on-execute-threshold 2)
+ '(py-underscore-word-syntax-p nil)
+ '(python-shell-interpreter "ipython")
  '(send-mail-function (quote mailclient-send-it)))
 ;;;;FUN DEFS
 
