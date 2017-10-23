@@ -51,7 +51,8 @@
 (autopair-global-mode)
 (add-hook 'lisp-mode-hook
           #'(lambda () (setq autopair-dont-activate t)))
-
+(modify-syntax-entry ?< "(>" ) ; angle brackets matching global
+(modify-syntax-entry ?> ")<" )
 (cua-mode t)
 (setq cua-delete-copy-to-register-0 nil)
 (define-key global-map (kbd "<S-down-mouse-1>") 'ignore) ; turn off font dialog
@@ -66,11 +67,20 @@
 
 ;; (set-foreground-color "white")
 ;; (set-background-color "black")
+;; disable undo and put fundamental mode on large files
+(defun my-find-file-check-make-large-file-read-only-hook ()
+  "If a file is over a given size, make the buffer read only."
+  (when (> (buffer-size) (* 1024 1024))
+    (buffer-disable-undo)
+    (fundamental-mode)))
+(add-hook 'find-file-hook 'my-find-file-check-make-large-file-read-only-hook)
+
 (set-face-attribute 'default nil :height 150)
 (setq case-fold-search nil)
 (setq doc-view-continuous t)
 (delete-selection-mode 1)
 (setq split-width-threshold nil)
+(setq confirm-kill-emacs 'y-or-n-p)
 (setq kill-buffer-query-functions
   (remq 'process-kill-buffer-query-function
          kill-buffer-query-functions)) ; no active process prompt
@@ -86,8 +96,9 @@
  '(ipython-complete-use-separate-shell-p nil)
  '(package-selected-packages
    (quote
-    (flymake-python-pyflakes zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
+    (cuda-mode flymake-python-pyflakes zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
  '(py-force-py-shell-name-p nil)
+ '(py-indent-paren-spanned-multilines-p nil)
  '(py-keep-windows-configuration nil)
  '(py-python-command-args (quote ("--colors=Linux")))
  '(py-shell-name "ipython")

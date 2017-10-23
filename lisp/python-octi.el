@@ -127,6 +127,7 @@
  '(py-keep-windows-configuration nil)
  '(py-split-window-on-execute t)
  '(py-underscore-word-syntax-p nil)
+ '(py-indent-paren-spanned-multilines-p nil)
  '(python-shell-interpreter "ipython")
 )
 (provide 'python-octi)
