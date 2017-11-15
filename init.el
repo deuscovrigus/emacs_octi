@@ -42,6 +42,9 @@
 (require 'generic-util-octi)
 (require 'ido)
 (require 'magit)
+(add-hook 'magit-status-mode-hook
+          (lambda ()
+             (setq truncate-lines nil)))
 (require 'uniquify)
 (require 'doc-view)
 (require 'zenburn-theme)
@@ -84,7 +87,17 @@
 (setq kill-buffer-query-functions
   (remq 'process-kill-buffer-query-function
          kill-buffer-query-functions)) ; no active process prompt
-;;Tex settingscroll
+;; flymake settings
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(flymake-errline ((((class color)) (:underline "red" :weight bold))))
+ '(flymake-warnline ((((class color)) (:underline "yellow" :weight bold))))
+ '(flyspell-duplicate ((t (:inherit nil :underline (:color "#DFAF8F" :style wave :weight bold) :weight normal))))
+ '(flyspell-incorrect ((t (:inherit nil :underline (:color "#CC9393" :style wave :weight bold) :weight normal))))
+ '(mumamo-region ((t (:background "black")))))
 
 ;;to set background color to lack
 (custom-set-variables
@@ -92,11 +105,31 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(LaTeX-command "latex -synctex=1 --shell-escape --enable-write18")
+ '(TeX-source-correlate-method (quote synctex))
+ '(TeX-source-correlate-mode t)
+ '(TeX-source-correlate-start-server t)
+ '(TeX-source-specials-view-emacsclient-flags "--no-wait +%%l %%f")
+ '(TeX-view-program-list
+   (quote
+    (("Okular" "okular --unique %o#src:%n%(masterdir)./%b"))))
+ '(TeX-view-program-selection
+   (quote
+    (((output-dvi style-pstricks)
+      "dvips and gv")
+     (output-dvi "xdvi")
+     (output-pdf "Okular")
+     (output-html "xdg-open"))))
  '(backup-by-copying t)
  '(ipython-complete-use-separate-shell-p nil)
  '(package-selected-packages
    (quote
-    (cuda-mode flymake-python-pyflakes zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
+    (flyspell-correct-popup cuda-mode flymake-python-pyflakes zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
+ '(preview-default-document-pt 14)
+ '(preview-gs-options
+   (quote
+    ("-q" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4")))
+ '(preview-scale-function 2.0)
  '(py-force-py-shell-name-p nil)
  '(py-indent-paren-spanned-multilines-p nil)
  '(py-keep-windows-configuration nil)
@@ -128,12 +161,7 @@
 (define-key (current-global-map) (kbd "C-M-<up>") 'enlarge-window)
 (define-key (current-global-map) (kbd "C-M-<down>") 'shrink-window)
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(mumamo-region ((t (:background "black")))))
+
 (defun ns-get-pasteboard ()
       "Returns the value of the pasteboard, or nil for unsupported formats."
      (condition-case nil

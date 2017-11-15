@@ -105,9 +105,6 @@
                  (lambda ()
                    (not (eq (get-text-property (point) 'face)
                             'Font-lock-comment-face))))))
-(custom-set-faces
-  '(flymake-errline ((((class color)) (:underline "red"))))
-  '(flymake-warnline ((((class color)) (:underline "yellow")))))
 (add-hook 'python-mode-hook
           (lambda ()
             (require 'flymake-cursor)
