@@ -1,6 +1,10 @@
 elpa/
 lisp/plugins/
+ido.last
 ac-comphist.dat
 ede-projects.el
 bookmarks/
 session.*
+*.*~
+.python-environments/
+auto-save-list/
