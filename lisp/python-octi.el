@@ -48,11 +48,12 @@
 ;; 	    (local-set-key (kbd "M-/") 'company-complete)
 ;; 	    ))
 
-(defun my-compile ()
+(defun run-python3 ()
   "Use compile to run python programs"
   (interactive)
   (save-buffer)
-  (compile (concat "python " (buffer-name))))
+  (py-execute-buffer-python3)
+  )
 
 (defun my-compile-d ()
   "python debug exec"
@@ -76,7 +77,7 @@
 
 (setq compilation-scroll-output t)
 (define-key python-mode-map (kbd "C-M-c") 'run-ipython)
-(define-key python-mode-map (kbd "C-M-v") 'my-compile-d)
+(define-key python-mode-map (kbd "C-M-v") 'run-python3)
 (define-key python-mode-map (kbd "C-M-x") 'new-ipython-shell)
 (define-key python-mode-map (kbd "C-M-j") 'jedi:goto-definition)
 (define-key python-mode-map (kbd "C-,") 'jedi:goto-definition-pop-marker)
