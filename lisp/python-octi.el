@@ -17,7 +17,6 @@
           (lambda()
             (jedi:setup)
             (setq jedi:complete-on-dot t)
-            (setq jedi:server-command '("jediepcserver"))
             (delq 'ac-source-dictionary ac-sources)
             (delq 'ac-source-abbrev ac-sources)
             (delq 'ac-source-words-in-same-mode-buffers ac-sources)
