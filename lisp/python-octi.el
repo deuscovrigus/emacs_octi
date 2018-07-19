@@ -107,10 +107,7 @@
                             'Font-lock-comment-face))))))
 (add-hook 'python-mode-hook
           (lambda ()
-            (require 'flymake-cursor)
-            (require 'flymake-python-pyflakes)
-            (flymake-python-pyflakes-load)
-            (setq flymake-python-pyflakes-executable "flake8")
+          (flycheck-mode)
 ))
 
 ;; (add-hook 'find-file-hook 'flymake-find-file-hook)

@@ -42,7 +42,7 @@
 (require 'generic-util-octi)
 (require 'ido)
 (require 'magit)
-(add-hook 'magit-status-mode-hook
+(add-hook 'magit-diff-mode-hook
           (lambda ()
              (setq truncate-lines nil)))
 (require 'uniquify)
@@ -66,6 +66,7 @@
 (scroll-bar-mode -1) ; no scroll bars
 (xterm-mouse-mode)
 (tool-bar-mode -1) ; no tool bar
+(global-eldoc-mode -1); no eldoc
 (ido-mode t)
 
 ;; (set-foreground-color "white")
@@ -74,11 +75,10 @@
 (defun my-find-file-check-make-large-file-read-only-hook ()
   "If a file is over a given size, make the buffer read only."
   (when (> (buffer-size) (* 1024 1024))
-    (buffer-disable-undo)
     (fundamental-mode)))
 (add-hook 'find-file-hook 'my-find-file-check-make-large-file-read-only-hook)
 
-(set-face-attribute 'default nil :height 150)
+(set-face-attribute 'default nil :height 120)
 (setq case-fold-search nil)
 (setq doc-view-continuous t)
 (delete-selection-mode 1)
@@ -93,8 +93,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(flymake-errline ((((class color)) (:underline "red" :weight bold))))
- '(flymake-warnline ((((class color)) (:underline "yellow" :weight bold))))
+ '(flymake-error ((((class color)) (:underline "red" :weight bold))))
+ '(flymake-warning ((((class color)) (:underline "yellow" :weight bold))))
  '(flyspell-duplicate ((t (:inherit nil :underline (:color "#DFAF8F" :style wave :weight bold) :weight normal))))
  '(flyspell-incorrect ((t (:inherit nil :underline (:color "#CC9393" :style wave :weight bold) :weight normal))))
  '(mumamo-region ((t (:background "black")))))
@@ -105,26 +105,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(LaTeX-command "latex -synctex=1 --shell-escape --enable-write18")
- '(TeX-source-correlate-method (quote synctex))
- '(TeX-source-correlate-mode t)
- '(TeX-source-correlate-start-server t)
- '(TeX-source-specials-view-emacsclient-flags "--no-wait +%%l %%f")
- '(TeX-view-program-list
-   (quote
-    (("Okular" "okular --unique %o#src:%n%(masterdir)./%b"))))
- '(TeX-view-program-selection
-   (quote
-    (((output-dvi style-pstricks)
-      "dvips and gv")
-     (output-dvi "xdvi")
-     (output-pdf "Okular")
-     (output-html "xdg-open"))))
  '(backup-by-copying t)
  '(ipython-complete-use-separate-shell-p nil)
  '(package-selected-packages
    (quote
-    (flyspell-correct-popup cuda-mode flymake-python-pyflakes zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
+    (flycheck-pyflakes flycheck flyspell-correct-popup cuda-mode flymake-python-pyflakes zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
  '(preview-default-document-pt 14)
  '(preview-gs-options
    (quote
