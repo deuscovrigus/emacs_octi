@@ -18,8 +18,8 @@
  ((string-equal system-type 'darwin) ; Mac OS X
   (progn
 (require 'fixpath)
-(setq mac-option-key-is-meta t
-      mac-command-key-is-meta nil
+(setq mac-option-key-is-meta nil
+      mac-command-key-is-meta t
       mac-command-modifier 'meta
       mac-option-modifier 'none)
 (setq mac-function-modifier 'control))))
