@@ -42,6 +42,9 @@
 (require 'generic-util-octi)
 (require 'ido)
 (require 'magit)
+(add-hook 'magit-diff-mode-hook
+          (lambda ()
+             (setq truncate-lines nil)))
 (require 'uniquify)
 (require 'doc-view)
 (require 'zenburn-theme)
@@ -51,7 +54,8 @@
 (autopair-global-mode)
 (add-hook 'lisp-mode-hook
           #'(lambda () (setq autopair-dont-activate t)))
-
+(modify-syntax-entry ?< "(>" ) ; angle brackets matching global
+(modify-syntax-entry ?> ")<" )
 (cua-mode t)
 (setq cua-delete-copy-to-register-0 nil)
 (define-key global-map (kbd "<S-down-mouse-1>") 'ignore) ; turn off font dialog
@@ -62,19 +66,38 @@
 (scroll-bar-mode -1) ; no scroll bars
 (xterm-mouse-mode)
 (tool-bar-mode -1) ; no tool bar
+(global-eldoc-mode -1); no eldoc
 (ido-mode t)
 
 ;; (set-foreground-color "white")
 ;; (set-background-color "black")
-(set-face-attribute 'default nil :height 150)
+;; disable undo and put fundamental mode on large files
+(defun my-find-file-check-make-large-file-read-only-hook ()
+  "If a file is over a given size, make the buffer read only."
+  (when (> (buffer-size) (* 1024 1024))
+    (fundamental-mode)))
+(add-hook 'find-file-hook 'my-find-file-check-make-large-file-read-only-hook)
+
+(set-face-attribute 'default nil :height 120)
 (setq case-fold-search nil)
 (setq doc-view-continuous t)
 (delete-selection-mode 1)
 (setq split-width-threshold nil)
+(setq confirm-kill-emacs 'y-or-n-p)
 (setq kill-buffer-query-functions
   (remq 'process-kill-buffer-query-function
          kill-buffer-query-functions)) ; no active process prompt
-;;Tex settingscroll
+;; flymake settings
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(flymake-error ((((class color)) (:underline "red" :weight bold))))
+ '(flymake-warning ((((class color)) (:underline "yellow" :weight bold))))
+ '(flyspell-duplicate ((t (:inherit nil :underline (:color "#DFAF8F" :style wave :weight bold) :weight normal))))
+ '(flyspell-incorrect ((t (:inherit nil :underline (:color "#CC9393" :style wave :weight bold) :weight normal))))
+ '(mumamo-region ((t (:background "black")))))
 
 ;;to set background color to lack
 (custom-set-variables
@@ -83,6 +106,15 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(backup-by-copying t)
+ '(ipython-complete-use-separate-shell-p nil)
+ '(package-selected-packages
+   (quote
+    (flycheck-pyflakes flycheck flyspell-correct-popup cuda-mode flymake-python-pyflakes zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
+ '(preview-default-document-pt 14)
+ '(preview-gs-options
+   (quote
+    ("-q" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4")))
+ '(preview-scale-function 2.0)
  '(send-mail-function (quote mailclient-send-it)))
 ;;;;FUN DEFS
 
@@ -105,12 +137,7 @@
 (define-key (current-global-map) (kbd "C-M-<up>") 'enlarge-window)
 (define-key (current-global-map) (kbd "C-M-<down>") 'shrink-window)
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(mumamo-region ((t (:background "black")))))
+
 (defun ns-get-pasteboard ()
       "Returns the value of the pasteboard, or nil for unsupported formats."
      (condition-case nil

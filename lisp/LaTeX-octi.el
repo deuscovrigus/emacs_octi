@@ -23,7 +23,10 @@
 (eval-after-load "flyspell"
   '(define-key flyspell-mode-map (kbd "C-;") nil))
 (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checking"
-t)
+  t)
+
+(require 'flyspell-correct)
+(define-key flyspell-mode-map (kbd "C-M-;") 'flyspell-correct-previous-word-generic)
 (setq reftex-plug-into-AUCTeX t)
 
 (if (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
@@ -33,7 +36,7 @@ t)
     (add-hook 'LaTeX-mode-hook (lambda ()
                                  (message "%s" "System detected as windows")
                                  (add-to-list 'TeX-command-list
-                                              '("TexifyPDF" "latexmk -pdflatex='pdflatex -file-line-error -synctex=1 -shell-escape -enable-restricted' -pdf %s" TeX-run-command nil :help "Texify document to pdf (resolves all cross-references, etc.)") t)
+                                              '("TexifyPDF" "latexmk -pdflatex='pdflatex -file-line-error -interaction=nonstopmode -synctex=1 -shell-escape -enable-restricted' -pdf %s" TeX-run-command nil :help "Texify document to pdf (resolves all cross-references, etc.)") t)
                                  (TeX-global-PDF-mode t)
                                  (TeX-PDF-mode t)
                                  (setq TeX-command-default "TexifyPDF")

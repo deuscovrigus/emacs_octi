@@ -17,7 +17,6 @@
           (lambda()
             (jedi:setup)
             (setq jedi:complete-on-dot t)
-            (setq jedi:server-command '("jediepcserver"))
             (delq 'ac-source-dictionary ac-sources)
             (delq 'ac-source-abbrev ac-sources)
             (delq 'ac-source-words-in-same-mode-buffers ac-sources)
@@ -48,11 +47,12 @@
 ;; 	    (local-set-key (kbd "M-/") 'company-complete)
 ;; 	    ))
 
-(defun my-compile ()
+(defun run-python3 ()
   "Use compile to run python programs"
   (interactive)
   (save-buffer)
-  (compile (concat "python " (buffer-name))))
+  (py-execute-buffer-python3)
+  )
 
 (defun my-compile-d ()
   "python debug exec"
@@ -76,7 +76,7 @@
 
 (setq compilation-scroll-output t)
 (define-key python-mode-map (kbd "C-M-c") 'run-ipython)
-(define-key python-mode-map (kbd "C-M-v") 'my-compile-d)
+(define-key python-mode-map (kbd "C-M-v") 'run-python3)
 (define-key python-mode-map (kbd "C-M-x") 'new-ipython-shell)
 (define-key python-mode-map (kbd "C-M-j") 'jedi:goto-definition)
 (define-key python-mode-map (kbd "C-,") 'jedi:goto-definition-pop-marker)
@@ -105,33 +105,23 @@
                  (lambda ()
                    (not (eq (get-text-property (point) 'face)
                             'Font-lock-comment-face))))))
-(custom-set-faces
-  '(flymake-errline ((((class color)) (:underline "red"))))
-  '(flymake-warnline ((((class color)) (:underline "yellow")))))
 (add-hook 'python-mode-hook
           (lambda ()
-(when (load "flymake-cursor" t)
-  (defun flymake-pyflakes-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-		       'flymake-create-temp-inplace))
-	   (local-file (file-relative-name
-			temp-file
-			(file-name-directory buffer-file-name))))
-      (list "flake8" (list local-file))))
-  (add-to-list 'flymake-allowed-file-name-masks
-	       '("\\.py\\'" flymake-pyflakes-init)))
+          (flycheck-mode)
 ))
 
-(add-hook 'find-file-hook 'flymake-find-file-hook)
+;; (add-hook 'find-file-hook 'flymake-find-file-hook)
 
 (custom-set-variables
  '(ipython-complete-use-separate-shell-p nil)
- '(py-python-command-args (quote ("--pylab" "--colors=Linux")))
+ '(py-python-command-args (quote ("--colors=Linux")))
  '(py-shell-name "ipython")
  '(py-force-py-shell-name-p nil)
+ '(py-split-window-on-execute-threshold 2)
  '(py-keep-windows-configuration nil)
  '(py-split-window-on-execute t)
  '(py-underscore-word-syntax-p nil)
+ '(py-indent-paren-spanned-multilines-p nil)
  '(python-shell-interpreter "ipython")
 )
 (provide 'python-octi)
