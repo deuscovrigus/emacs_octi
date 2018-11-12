@@ -3,8 +3,10 @@ lisp/plugins/
 ido.last
 ac-comphist.dat
 ede-projects.el
-bookmarks/
+bookmarks
 session.*
 *.*~
 .python-environments/
 auto-save-list/
+eshell
+network-security.data
