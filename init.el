@@ -18,8 +18,8 @@
  ((string-equal system-type 'darwin) ; Mac OS X
   (progn
 (require 'fixpath)
-(setq mac-option-key-is-meta t
-      mac-command-key-is-meta nil
+(setq mac-option-key-is-meta nil
+      mac-command-key-is-meta t
       mac-command-modifier 'meta
       mac-option-modifier 'none)
 (setq mac-function-modifier 'control))))
@@ -93,10 +93,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(flymake-error ((((class color)) (:underline "red" :weight bold))))
- '(flymake-warning ((((class color)) (:underline "yellow" :weight bold))))
- '(flyspell-duplicate ((t (:inherit nil :underline (:color "#DFAF8F" :style wave :weight bold) :weight normal))))
- '(flyspell-incorrect ((t (:inherit nil :underline (:color "#CC9393" :style wave :weight bold) :weight normal))))
  '(mumamo-region ((t (:background "black")))))
 
 ;;to set background color to lack
@@ -109,12 +105,14 @@
  '(ipython-complete-use-separate-shell-p nil)
  '(package-selected-packages
    (quote
-    (flycheck-pyflakes flycheck flyspell-correct-popup cuda-mode flymake-python-pyflakes zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
- '(preview-default-document-pt 14)
- '(preview-gs-options
-   (quote
-    ("-q" "-dNOPAUSE" "-DNOPLATFONTS" "-dPrinted" "-dTextAlphaBits=4" "-dGraphicsAlphaBits=4")))
- '(preview-scale-function 2.0)
+    (docker dockerfile-mode yaml-mode zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
+ '(py-force-py-shell-name-p nil)
+ '(py-keep-windows-configuration nil)
+ '(py-python-command-args (quote ("--pylab" "--colors=Linux")))
+ '(py-shell-name "ipython")
+ '(py-split-window-on-execute t)
+ '(py-underscore-word-syntax-p nil)
+ '(python-shell-interpreter "ipython")
  '(send-mail-function (quote mailclient-send-it)))
 ;;;;FUN DEFS
 
