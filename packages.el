@@ -7,7 +7,7 @@
     (package-initialize)
     (require 'package)
     (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-    (add-to-list 'package-archives     '("marmalade" . "http://marmalade-repo.org/packages/"))
+;    (add-to-list 'package-archives     '("marmalade" . "http://marmalade-repo.org/packages/"))
     (package-refresh-contents)
     (dolist (p toinstall) (safe-install-package p))
     ))
