@@ -105,12 +105,14 @@
  '(ipython-complete-use-separate-shell-p nil)
  '(package-selected-packages
    (quote
-    (docker dockerfile-mode yaml-mode zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
+    (highlight-indent-guides docker dockerfile-mode yaml-mode zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
  '(py-force-py-shell-name-p nil)
+ '(py-indent-paren-spanned-multilines-p nil)
  '(py-keep-windows-configuration nil)
  '(py-python-command-args (quote ("--pylab" "--colors=Linux")))
  '(py-shell-name "ipython")
  '(py-split-window-on-execute t)
+ '(py-split-window-on-execute-threshold 2)
  '(py-underscore-word-syntax-p nil)
  '(python-shell-interpreter "ipython")
  '(send-mail-function (quote mailclient-send-it)))

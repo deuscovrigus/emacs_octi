@@ -10,6 +10,8 @@
             (set-variable 'py-indent-offset 4)
             (set-variable 'py-smart-indentation nil)
             (set-variable 'indent-tabs-mode nil)
+            (setq highlight-indent-guides-method 'character)
+            (highlight-indent-guides-mode)
             (define-key python-mode-map "\C-m" 'newline-and-indent)
            ))
 ;; Jedi python setup
