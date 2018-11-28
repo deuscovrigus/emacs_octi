@@ -105,7 +105,7 @@
  '(ipython-complete-use-separate-shell-p nil)
  '(package-selected-packages
    (quote
-    (highlight-indent-guides docker dockerfile-mode yaml-mode zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
+    (comment-dwim-2 highlight-indent-guides docker dockerfile-mode yaml-mode zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
  '(py-force-py-shell-name-p nil)
  '(py-indent-paren-spanned-multilines-p nil)
  '(py-keep-windows-configuration nil)
@@ -129,7 +129,7 @@
 (define-key (current-global-map) (kbd "M-O") 'frame-bck)
 (define-key (current-global-map) (kbd "M-c") 'cua--prefix-override-handler)
 (define-key (current-global-map) (kbd "M-v") 'cua-paste)
-; (define-key (current-global-map) (kbd "M-g") 'goto-line)
+(global-set-key (kbd "M-;") 'comment-dwim-2)
 (define-key (current-global-map) (kbd "C-M-<right>") 'enlarge-window-horizontally)
 (define-key (current-global-map) (kbd "C-M-<left>") 'shrink-window-horizontally)
 (define-key (current-global-map) (kbd "C-M-<up>") 'enlarge-window)
