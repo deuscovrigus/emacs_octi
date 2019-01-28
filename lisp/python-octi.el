@@ -116,7 +116,7 @@
 
 (custom-set-variables
  '(ipython-complete-use-separate-shell-p nil)
- '(py-python-command-args (quote ("--colors=Linux")))
+ '(py-python-command-args (quote ("--simple-prompt")))
  '(py-shell-name "ipython")
  '(py-force-py-shell-name-p nil)
  '(py-split-window-on-execute-threshold 2)

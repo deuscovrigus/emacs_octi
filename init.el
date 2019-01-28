@@ -108,11 +108,12 @@
     (comment-dwim-2 highlight-indent-guides docker dockerfile-mode yaml-mode zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
  '(password-word-equivalents
    (quote
-    ("password" "passcode" "passphrase" "pass phrase" "암호" "パスワード" "ପ୍ରବେଶ ସଙ୍କେତ" "ពាក្យសម្ងាត់" "adgangskode" "contraseña" "contrasenya" "geslo" "hasło" "heslo" "iphasiwedi" "jelszó" "lösenord" "lozinka" "mật khẩu" "mot de passe" "parola" "pasahitza" "passord" "passwort" "pasvorto" "salasana" "senha" "slaptažodis" "wachtwoord" "كلمة السر" "ססמה" "лозинка" "пароль" "गुप्तशब्द" "शब्दकूट" "પાસવર્ડ" "సంకేతపదము" "ਪਾਸਵਰਡ" "ಗುಪ್ತಪದ" "கடவுச்சொல்" "അടയാളവാക്ക്" "গুপ্তশব্দ" "পাসওয়ার্ড" "රහස්පදය" "密码" "密碼" "YubiKey for")))
+    ("password" "passcode" "passphrase" "pass phrase" "mot de passe" "parola" "wachtwoord" "YubiKey for")))
  '(py-force-py-shell-name-p nil)
  '(py-indent-paren-spanned-multilines-p nil)
+ '(py-ipython-command-args "--automagic --simple-prompt")
  '(py-keep-windows-configuration nil)
- '(py-python-command-args (quote ("--pylab" "--colors=Linux")))
+ '(py-python-command-args (quote ("--simple-prompt")))
  '(py-shell-name "ipython")
  '(py-split-window-on-execute t)
  '(py-split-window-on-execute-threshold 2)
@@ -132,7 +133,7 @@
 (define-key (current-global-map) (kbd "M-O") 'frame-bck)
 (define-key (current-global-map) (kbd "M-c") 'cua--prefix-override-handler)
 (define-key (current-global-map) (kbd "M-v") 'cua-paste)
-(global-set-key (kbd "M-;") 'comment-dwim-2)
+(define-key (current-global-map) (kbd "M-;") 'comment-dwim-2)
 (define-key (current-global-map) (kbd "C-M-<right>") 'enlarge-window-horizontally)
 (define-key (current-global-map) (kbd "C-M-<left>") 'shrink-window-horizontally)
 (define-key (current-global-map) (kbd "C-M-<up>") 'enlarge-window)
