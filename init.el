@@ -65,6 +65,7 @@
 (bar-cursor-mode 1)
 (scroll-bar-mode -1) ; no scroll bars
 (xterm-mouse-mode)
+(savehist-mode 1); remember minibuffer commands
 (tool-bar-mode -1) ; no tool bar
 (global-eldoc-mode -1); no eldoc
 (ido-mode t)
