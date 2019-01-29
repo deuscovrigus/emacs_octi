@@ -65,8 +65,7 @@
 (defun run-ipython ()
   "Use compile to run python programs"
   (interactive)
-  (py-execute-buffer)
-  (display-buffer "*IPython*" t)
+  (pop-to-buffer (window-buffer (py-execute-buffer)) t)
 )
 
 (defun new-ipython-shell (&optional argprompt dedicated switch)
@@ -115,15 +114,15 @@
 ;; (add-hook 'find-file-hook 'flymake-find-file-hook)
 
 (custom-set-variables
- '(ipython-complete-use-separate-shell-p nil)
- '(py-python-command-args (quote ("--simple-prompt")))
- '(py-shell-name "ipython")
  '(py-force-py-shell-name-p nil)
- '(py-split-window-on-execute-threshold 2)
- '(py-keep-windows-configuration nil)
- '(py-split-window-on-execute t)
- '(py-underscore-word-syntax-p nil)
  '(py-indent-paren-spanned-multilines-p nil)
- '(python-shell-interpreter "ipython")
+ '(py-ipython-command-args "--automagic --simple-prompt")
+ '(py-keep-windows-configuration nil)
+ '(py-shell-name "python")
+ '(py-split-window-on-execute t)
+ '(py-split-window-on-execute-threshold 2)
+ '(py-underscore-word-syntax-p nil)
+ '(python-shell-interpreter "python")
+ '(ipython-complete-use-separate-shell-p nil)
 )
 (provide 'python-octi)
