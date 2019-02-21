@@ -89,6 +89,7 @@
   (remq 'process-kill-buffer-query-function
          kill-buffer-query-functions)) ; no active process prompt
 ;; flymake settings
+(load "flymake")
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -103,12 +104,22 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(backup-by-copying t)
+ '(ipython-complete-use-separate-shell-p nil)
  '(package-selected-packages
    (quote
-    (comment-dwim-2 highlight-indent-guides docker dockerfile-mode yaml-mode zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
+    (elpy comment-dwim-2 highlight-indent-guides docker dockerfile-mode yaml-mode zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
  '(password-word-equivalents
    (quote
     ("password" "passcode" "passphrase" "pass phrase" "mot de passe" "parola" "wachtwoord" "YubiKey for")))
+ '(py-force-py-shell-name-p nil)
+ '(py-indent-paren-spanned-multilines-p nil)
+ '(py-ipython-command-args "--automagic --simple-prompt")
+ '(py-keep-windows-configuration nil)
+ '(py-shell-name "ipython")
+ '(py-split-window-on-execute t)
+ '(py-split-window-on-execute-threshold 2)
+ '(py-underscore-word-syntax-p nil)
+ '(python-shell-interpreter "ipython")
  '(send-mail-function (quote mailclient-send-it)))
 ;;;;FUN DEFS
 

@@ -1,17 +1,9 @@
 SITE_PACKAGE_DIR:=$(shell python -m site --user-site)
 
-all: emacs pymacs
+all: emacs elpy
 
-pymacs:
-	@echo $(SITE_PACKAGE_DIR)
-	cd ./lisp/plugins/Pymacs ; make
-	cp ./lisp/plugins/Pymacs/Pymacs.py $(SITE_PACKAGE_DIR)
+elpy:
+	pip3 install -r https://raw.githubusercontent.com/jorgenschaefer/elpy/master/requirements3.txt
 
-
-python-mode:
-	@echo $(SITE_PACKAGE_DIR)
-	chmod 755 ./lisp/plugins/python-mode/byte-compile-directory.sh
-	cp ./lisp/plugins/python-mode/completion/pycomplete.py $(SITE_PACKAGE_DIR)
-	cd ./lisp/plugins/python-mode; ./byte-compile-directory.sh
 emacs:
 	emacs  --batch --load packages.el --eval "(install-packages)"
