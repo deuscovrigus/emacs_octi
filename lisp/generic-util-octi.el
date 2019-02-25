@@ -91,9 +91,12 @@ With argument ARG, do this that many times."
 ;;   (other-window -1))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+(require 'cl-lib)
 (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
-  (flet ((process-list ())) ad-do-it))
+  (cl-letf (((symbol-function #'process-list) (lambda ())))
+    ad-do-it))
 
 (defun stop-using-minibuffer ()  "kill the minibuffer"
 (when (and (>= (recursion-depth) 1) (active-minibuffer-window))
