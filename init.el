@@ -3,7 +3,7 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (require 'package)
 (package-initialize)
-(add-to-list 'package-archives  '("marmalade" .  "http://marmalade-repo.org/packages/"))
+;; (add-to-list 'package-archives  '("marmalade" .  "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives  '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 (progn (cd "~/.emacs.d/lisp")(normal-top-level-add-subdirs-to-load-path))
@@ -107,7 +107,7 @@
  '(ipython-complete-use-separate-shell-p nil)
  '(package-selected-packages
    (quote
-    (elpy comment-dwim-2 highlight-indent-guides docker dockerfile-mode yaml-mode zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion bar-cursor autopair auctex)))
+    (elpy comment-dwim-2 highlight-indent-guides docker dockerfile-mode yaml-mode zenburn-theme yasnippet magit jedi flymake-cursor company-math cmake-mode bash-completion autopair auctex)))
  '(password-word-equivalents
    (quote
     ("password" "passcode" "passphrase" "pass phrase" "mot de passe" "parola" "wachtwoord" "YubiKey for")))
