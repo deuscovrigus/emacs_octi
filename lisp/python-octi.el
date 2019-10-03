@@ -14,7 +14,8 @@
             (highlight-indentation-mode -1)
             (setq highlight-indent-guides-method 'character)
             (highlight-indent-guides-mode)
-
+            (setq company-idle-delay 0.5)
+            (setq company-backends '(elpy-company-backend))
            ))
 (define-key python-mode-map (kbd "C-M-c") (kbd "C-u C-c C-y B")) ;elpy-shell-send-buffer-and-go with prefix
 (define-key python-mode-map (kbd "C-M-j") 'elpy-goto-definition)

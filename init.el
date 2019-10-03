@@ -104,6 +104,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(backup-by-copying t)
+ '(elpy-autodoc-delay 4)
  '(ipython-complete-use-separate-shell-p nil)
  '(package-selected-packages
    (quote
