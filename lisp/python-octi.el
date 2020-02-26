@@ -1,7 +1,5 @@
-;(require 'python-mode)
 (package-initialize)
 (elpy-enable)
-
 ;; generic python settings
 (add-hook 'elpy-mode-hook
           (lambda()

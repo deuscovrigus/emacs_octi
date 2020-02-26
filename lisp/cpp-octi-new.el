@@ -22,7 +22,6 @@
 	    (require 'company-rtags)
 	    (setq company-backends '(company-rtags))
 	    (company-mode)
-	    (rtags-diagnostics)
 	    (local-unset-key (kbd "M-/"))
 	    (local-set-key (kbd "M-/") 'company-complete)
 ))
@@ -30,10 +29,16 @@
 (add-hook 'c++-mode-hook
           (lambda()
             (setq project-dir "/home/prj/janus/build/")
+            (require 'flycheck-rtags)
+            (flycheck-select-checker 'rtags)
+            (setq rtags-autostart-diagnostics t)
+            (setq-local flycheck-highlighting-mode nil) ;; RTags creates more accurate overlays.
+            (setq-local flycheck-check-syntax-automatically nil)
             (require 'compile)
             (set  (make-local-variable 'compile-command)
                   (concat "ninja -C " project-dir))
 	    ))
+
 
 (add-hook 'c-mode-common-hook
           (lambda()
