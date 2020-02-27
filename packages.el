@@ -1,7 +1,7 @@
 (defvar toinstall '(zenburn-theme
                     company company-math jedi auctex auto-complete popup autopair flycheck
-                    flymake-cursor bash-completion magit bar-cursor yasnippet cmake-mode flymake-python-pyflakes
-                    cuda-mode flyspell-correct highlight-indentation comment-dwim-2 elpy flycheck-rtags))
+                    bash-completion magit bar-cursor yasnippet cmake-mode
+                    cuda-mode flyspell-correct highlight-indentation comment-dwim-2 elpy ))
 (defun install-packages()
   (progn
     (package-initialize)
