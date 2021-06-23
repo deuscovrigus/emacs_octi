@@ -1,8 +1,6 @@
 (server-start)
 (remove-hook 'python-mode-hook 'wisent-python-default-setup)
 (add-to-list 'load-path "~/.emacs.d/lisp")
-(require 'package)
-(package-initialize)
 ;; (add-to-list 'package-archives  '("marmalade" .  "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives  '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
@@ -17,11 +15,12 @@
 (cond
  ((string-equal system-type 'darwin) ; Mac OS X
   (progn
-(require 'fixpath)
-(setq mac-option-key-is-meta nil
-      mac-command-key-is-meta t
-      mac-command-modifier 'meta
-      mac-option-modifier 'none)
+    (require 'fixpath)
+;     (set-keyboard-coding-system nil)
+(setq mac-option-key-is-meta t
+      mac-command-key-is-meta nil
+      mac-command-modifier 'control
+      mac-option-modifier 'meta)
 (setq mac-function-modifier 'control))))
 
 (cond
