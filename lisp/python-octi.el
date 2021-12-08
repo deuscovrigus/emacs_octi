@@ -14,7 +14,10 @@
             (highlight-indent-guides-mode)
             (setq company-idle-delay 0.5)
             (setq company-backends '(elpy-company-backend))
-           ))
+            ))
+(when (load "flycheck" t t)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-hook 'elpy-mode-hook 'flycheck-mode))
 (define-key python-mode-map (kbd "C-M-c") (kbd "C-u C-c C-y B")) ;elpy-shell-send-buffer-and-go with prefix
 (define-key python-mode-map (kbd "C-M-j") 'elpy-goto-definition)
 (define-key python-mode-map (kbd "C-,") 'pop-tag-mark)
