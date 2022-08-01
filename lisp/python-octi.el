@@ -1,5 +1,11 @@
 (package-initialize)
 (elpy-enable)
+(load "elpy")
+(load "elpy-rpc")
+(load "elpy-shell")
+(load "elpy-profile")
+(load "elpy-refactor")
+(load "elpy-django")
 ;; generic python settings
 (add-hook 'elpy-mode-hook
           (lambda()
